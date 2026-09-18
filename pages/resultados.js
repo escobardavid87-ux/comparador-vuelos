@@ -47,6 +47,8 @@ export default function Resultados() {
     origin={origin}
     destination={destination}
     month={departDate.slice(0, 7)}
+       selected={departDate}
+    onSelect={(f) => router.push({ pathname: '/resultados', query: { origin, destination, departDate: f } }, undefined, { shallow: true })}
   />
 )}
         {false && (
