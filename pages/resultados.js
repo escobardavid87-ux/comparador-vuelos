@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-
+import CalendarioPrecios from '../components/CalendarioPrecios';
 export default function Resultados() {
   const router = useRouter();
   const { origin, destination, departDate } = router.query;
@@ -41,7 +41,15 @@ export default function Resultados() {
       {cargando && <p>Buscando los mejores precios…</p>}
       {error && <p style={{ color: '#a32d2d' }}>No se pudo cargar: {error}</p>}
       {!cargando && !error && vuelos.length === 0 && <p>No se encontraron vuelos para esta ruta y fecha.</p>}
-{calendario.length > 0 && (
+       {origin && destination && departDate && (
+  <CalendarioPrecios
+    key={`${origin}-${destination}`}
+    origin={origin}
+    destination={destination}
+    month={departDate.slice(0, 7)}
+  />
+)}
+        {false && (
           <div style={{ marginBottom: 16 }}>
             <p style={{ fontSize: 13, fontWeight: 500, marginBottom: 8 }}>Otros días de este mes</p>
             <div style={{ display: 'flex', gap: 8, overflowX: 'auto' }}>
