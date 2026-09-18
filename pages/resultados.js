@@ -1,6 +1,41 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import CalendarioPrecios from '../components/CalendarioPrecios';
+const AEROLINEAS = {
+  W4: 'Wizz Air',
+  W6: 'Wizz Air',
+  FR: 'Ryanair',
+  VY: 'Vueling',
+  IB: 'Iberia',
+  I2: 'Iberia Express',
+  YW: 'Air Nostrum',
+  UX: 'Air Europa',
+  V7: 'Volotea',
+  NT: 'Binter Canarias',
+  U2: 'easyJet',
+  EW: 'Eurowings',
+  LH: 'Lufthansa',
+  AF: 'Air France',
+  KL: 'KLM',
+  HV: 'Transavia',
+  BA: 'British Airways',
+  TP: 'TAP Air Portugal',
+  AZ: 'ITA Airways',
+  LX: 'Swiss',
+  OS: 'Austrian',
+  SN: 'Brussels Airlines',
+  SK: 'SAS',
+  AY: 'Finnair',
+  EI: 'Aer Lingus',
+  TK: 'Turkish Airlines',
+  PC: 'Pegasus',
+  DY: 'Norwegian',
+  LS: 'Jet2',
+  BT: 'airBaltic',
+  A3: 'Aegean',
+  LO: 'LOT',
+  AT: 'Royal Air Maroc',
+};
 export default function Resultados() {
   const router = useRouter();
   const { origin, destination, departDate } = router.query;
@@ -70,7 +105,7 @@ export default function Resultados() {
         {vuelos.map((v, i) => (
           <div key={i} className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <p style={{ margin: 0, fontWeight: 500, fontSize: 14 }}>{v.airline || 'Aerolínea'}</p>
+              <p style={{ margin: 0, fontWeight: 500, fontSize: 14 }}>{{AEROLINEAS[v.airline] || v.airline || 'Aerolínea'}}</p>
               <p style={{ margin: '4px 0 0', fontSize: 12, color: 'var(--text-secondary)' }}>
                 {v.transfers === 0 ? 'Directo' : `${v.transfers} escala(s)`}
               </p>
