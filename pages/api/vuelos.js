@@ -20,7 +20,10 @@ export default async function handler(req, res) {
     url.searchParams.set('destination', destination);
     url.searchParams.set('departure_at', departDate);
     url.searchParams.set('currency', 'eur');
+    url.searchParams.set('limit', '30');
+    url.searchParams.set('unique', 'false');
     url.searchParams.set('token', process.env.TRAVELPAYOUTS_TOKEN);
+    
 
     const response = await fetch(url.toString());
     const json = await response.json();
