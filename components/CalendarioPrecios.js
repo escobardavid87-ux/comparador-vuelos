@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function CalendarioPrecios({ origin, destination, month: inicial }) {
+export default function CalendarioPrecios({ origin, destination, month: inicial, selected, onSelect }) {
   const [month, setMonth] = useState(inicial);
   const [precios, setPrecios] = useState({});
   const [cargando, setCargando] = useState(true);
@@ -30,10 +30,9 @@ export default function CalendarioPrecios({ origin, destination, month: inicial 
   const primerDia = (new Date(y, m - 1, 1).getDay() + 6) % 7;
   const valores = Object.values(precios);
   const minimo = valores.length ? Math.min(...valores) : null;
-  const titulo = new Date(y, m - 1, 1).toLocaleDateString('es-ES', {
-    month: 'long',
-    year: 'numeric',
-  });
+  const titulo = new Date(y, m - 1, 1)
+    .toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })
+    .replace(/^./, (c) => c.toUpperCase());
 
   const cambiarMes = (n) => {
     const f = new Date(y, m - 1 + n, 1);
@@ -48,7 +47,7 @@ export default function CalendarioPrecios({ origin, destination, month: inicial 
     <div style={{ maxWidth: 420, margin: '16px auto', fontFamily: 'sans-serif' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
         <button onClick={() => cambiarMes(-1)}>‹</button>
-        <strong style={{ textTransform: 'capitalize' }}>{titulo}</strong>
+        <strong>{titulo}</strong>
         <button onClick={() => cambiarMes(1)}>›</button>
       </div>
 
@@ -60,23 +59,29 @@ export default function CalendarioPrecios({ origin, destination, month: inicial 
           if (!dia) return <div key={i} />;
           const fecha = `${month}-${String(dia).padStart(2, '0')}`;
           const precio = precios[fecha];
-          const barato = precio !== undefined && precio === minimo;
+          const hayPrecio = precio !== undefined;
+          const barato = hayPrecio && precio === minimo;
+          const elegido = fecha === selected;
           return (
-            <div
+            <button
               key={i}
+              onClick={() => hayPrecio && onSelect && onSelect(fecha)}
               style={{
                 padding: '6px 0',
                 borderRadius: 6,
-                border: '1px solid #ddd',
+                border: elegido ? '2px solid #2563eb' : '1px solid #ddd',
                 background: barato ? '#d4f5dd' : '#fff',
                 fontSize: 12,
+                fontFamily: 'inherit',
+                color: 'inherit',
+                cursor: hayPrecio ? 'pointer' : 'default',
               }}
             >
               <div>{dia}</div>
               <div style={{ fontWeight: 'bold', color: barato ? '#0a7a2f' : '#333' }}>
-                {precio !== undefined ? `${precio} €` : '–'}
+                {hayPrecio ? `${precio} €` : '–'}
               </div>
-            </div>
+            </button>
           );
         })}
       </div>
