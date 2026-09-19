@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import CalendarioPrecios from '../components/CalendarioPrecios';
+import AvisoAfiliados from '../components/AvisoAfiliados';
 
 const AEROLINEAS = {
   W4: 'Wizz Air',
@@ -72,7 +73,6 @@ export default function Resultados() {
 
       {origin && destination && departDate && (
         <CalendarioPrecios
-       import AvisoAfiliados from '../components/AvisoAfiliados';
           key={`${origin}-${destination}`}
           origin={origin}
           destination={destination}
@@ -100,6 +100,8 @@ export default function Resultados() {
           </div>
         ))}
       </div>
+
+      <AvisoAfiliados />
     </div>
   );
 }
