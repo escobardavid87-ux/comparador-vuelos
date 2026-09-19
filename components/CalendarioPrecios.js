@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { formatearPrecio } from '../lib/formato';
 
-export default function CalendarioPrecios({ origin, destination, month: inicial, selected, onSelect }) {
+export default function CalendarioPrecios({ origin, destination, month: inicial, selected, onSelect, divisa }) {
   const [month, setMonth] = useState(inicial);
   const [precios, setPrecios] = useState({});
   const [moneda, setMoneda] = useState('eur');
@@ -10,7 +10,8 @@ export default function CalendarioPrecios({ origin, destination, month: inicial,
   useEffect(() => {
     if (!origin || !destination) return;
     setCargando(true);
-    fetch(`/api/calendario?origin=${origin}&destination=${destination}&month=${month}`)
+    const extra = divisa ? `&currency=${divisa}` : '';
+    fetch(`/api/calendario?origin=${origin}&destination=${destination}&month=${month}${extra}`)
       .then((r) => r.json())
       .then((data) => {
         const mapa = {};
@@ -28,7 +29,7 @@ export default function CalendarioPrecios({ origin, destination, month: inicial,
       })
       .catch(() => setPrecios({}))
       .finally(() => setCargando(false));
-  }, [origin, destination, month]);
+  }, [origin, destination, month, divisa]);
 
   const [y, m] = month.split('-').map(Number);
   const diasMes = new Date(y, m, 0).getDate();
