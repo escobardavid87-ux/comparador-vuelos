@@ -30,6 +30,7 @@ export default function Home() {
         </div>
         <button className="btn-primary" type="submit">Buscar vuelos</button>
       </form>
+          <AvisoAfiliados />
     </div>
   );
 }
