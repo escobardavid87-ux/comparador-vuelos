@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { formatearPrecio } from '../lib/formato';
 
 export default function CalendarioPrecios({ origin, destination, month: inicial, selected, onSelect }) {
   const [month, setMonth] = useState(inicial);
   const [precios, setPrecios] = useState({});
+  const [moneda, setMoneda] = useState('eur');
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
@@ -12,14 +14,17 @@ export default function CalendarioPrecios({ origin, destination, month: inicial,
       .then((r) => r.json())
       .then((data) => {
         const mapa = {};
+        let mon = 'eur';
         if (Array.isArray(data)) {
           data.forEach((d) => {
+            if (d.currency) mon = d.currency;
             if (!(d.depart_date in mapa) || d.value < mapa[d.depart_date]) {
               mapa[d.depart_date] = d.value;
             }
           });
         }
         setPrecios(mapa);
+        setMoneda(mon);
       })
       .catch(() => setPrecios({}))
       .finally(() => setCargando(false));
@@ -79,7 +84,7 @@ export default function CalendarioPrecios({ origin, destination, month: inicial,
             >
               <div>{dia}</div>
               <div style={{ fontWeight: 'bold', color: barato ? '#0a7a2f' : '#333' }}>
-                {hayPrecio ? `${precio} €` : '–'}
+                {hayPrecio ? formatearPrecio(precio, moneda) : '-'}
               </div>
             </button>
           );
@@ -90,6 +95,5 @@ export default function CalendarioPrecios({ origin, destination, month: inicial,
         {cargando ? 'Cargando precios…' : 'Precios orientativos, basados en búsquedas recientes. El precio final puede ser más alto.'}
       </p>
     </div>
-
   );
 }
