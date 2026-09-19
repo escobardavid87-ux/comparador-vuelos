@@ -92,7 +92,7 @@ export default function Resultados() {
             </div>
             <div style={{ textAlign: 'right' }}>
               <p style={{ margin: 0, fontWeight: 500, fontSize: 18, color: 'var(--accent)' }}>{v.price}€</p>
-              <a href={`https://www.aviasales.com/search/${origin}${departDate.slice(8, 10)}${departDate.slice(5, 7)}${destination}1?marker=778832&currency=eur&locale=es`} target="_blank" rel="noreferrer" style={{ fontSize: 12 }}>
+              <a href={v.link_busqueda} target="_blank" rel="noreferrer" style={{ fontSize: 12 }}>
                 Ver precios actuales →
               </a>
             </div>
