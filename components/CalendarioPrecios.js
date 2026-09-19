@@ -90,5 +90,6 @@ export default function CalendarioPrecios({ origin, destination, month: inicial,
         {cargando ? 'Cargando precios…' : 'Precios orientativos, basados en búsquedas recientes. El precio final puede ser más alto.'}
       </p>
     </div>
+
   );
 }
