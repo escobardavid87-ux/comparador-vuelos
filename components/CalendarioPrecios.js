@@ -85,7 +85,7 @@ export default function CalendarioPrecios({ origin, destination, month: inicial,
             >
               <div>{dia}</div>
               <div style={{ fontWeight: 'bold', color: barato ? '#0a7a2f' : '#333' }}>
-                {hayPrecio ? formatearPrecio(precio, moneda) : '-'}
+                {hayPrecio ? formatearPrecio(precio, moneda, true) : '-'}
               </div>
             </button>
           );
