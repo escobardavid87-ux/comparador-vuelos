@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import BuscadorLugar from '../components/BuscadorLugar';
 
 export default function Home() {
   const router = useRouter();
-  const [origin, setOrigin] = useState('MAD');
-  const [destination, setDestination] = useState('BCN');
+  const [origin, setOrigin] = useState('');
+  const [destination, setDestination] = useState('');
   const [departDate, setDepartDate] = useState('');
 
   const buscar = (e) => {
     e.preventDefault();
-    if (!departDate) return;
+    if (!origin || !destination || !departDate) return;
     router.push(`/resultados?origin=${origin}&destination=${destination}&departDate=${departDate}`);
   };
 
@@ -20,18 +21,12 @@ export default function Home() {
         Comparamos precios de cientos de aerolíneas
       </p>
 
-      <form onSubmit={buscar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 16 }}>
-        <div>
-          <label style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Origen (código IATA)</label>
-          <input value={origin} onChange={(e) => setOrigin(e.target.value.toUpperCase())} maxLength={3} required />
-        </div>
-        <div>
-          <label style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Destino (código IATA)</label>
-          <input value={destination} onChange={(e) => setDestination(e.target.value.toUpperCase())} maxLength={3} required />
-        </div>
+      <form onSubmit={buscar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <BuscadorLugar etiqueta="Origen" onSelect={setOrigin} />
+        <BuscadorLugar etiqueta="Destino" onSelect={setDestination} />
         <div>
           <label style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Fecha de salida</label>
-          <input type="date" value={departDate} onChange={(e) => setDepartDate(e.target.value)} required />
+          <input type="date" value={departDate} onChange={(e) => setDepartDate(e.target.value)} />
         </div>
         <button className="btn-primary" type="submit">Buscar vuelos</button>
       </form>
