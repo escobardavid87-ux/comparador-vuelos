@@ -72,6 +72,7 @@ export default function Resultados() {
 
       {origin && destination && departDate && (
         <CalendarioPrecios
+       import AvisoAfiliados from '../components/AvisoAfiliados';
           key={`${origin}-${destination}`}
           origin={origin}
           destination={destination}
