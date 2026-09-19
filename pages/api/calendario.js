@@ -1,3 +1,5 @@
+import { detectarDivisa } from '../../lib/divisa';
+
 export default async function handler(req, res) {
   const { origin, destination, month } = req.query;
 
@@ -5,9 +7,11 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Faltan parámetros: origin, destination, month' });
   }
 
+  const currency = detectarDivisa(req);
+
   try {
     const url = new URL('https://api.travelpayouts.com/v2/prices/month-matrix');
-    url.searchParams.set('currency', 'eur');
+    url.searchParams.set('currency', currency);
     url.searchParams.set('origin', origin);
     url.searchParams.set('destination', destination);
     url.searchParams.set('show_to_affiliates', 'true');
@@ -17,10 +21,9 @@ export default async function handler(req, res) {
     const response = await fetch(url.toString());
     const json = await response.json();
 
-    res.status(200).json(json.data || []);
+    res.status(200).json((json.data || []).map((d) => ({ ...d, currency })));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Error consultando calendario' });
   }
 }
-
