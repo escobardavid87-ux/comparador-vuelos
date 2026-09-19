@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import BuscadorLugar from '../components/BuscadorLugar';
-
+import AvisoAfiliados from '../components/AvisoAfiliados';
 export default function Home() {
   const router = useRouter();
   const [origin, setOrigin] = useState('');
