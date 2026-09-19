@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import CalendarioPrecios from '../components/CalendarioPrecios';
-import AvisoAfiliados from '../components/AvisoAfiliados';
+import AvisoAfiliados from '../components/AvisoAfiliados';import { formatearPrecio } from '../lib/formato';
 
 const AEROLINEAS = {
   W4: 'Wizz Air',
@@ -92,7 +92,7 @@ export default function Resultados() {
               </p>
             </div>
             <div style={{ textAlign: 'right' }}>
-              <p style={{ margin: 0, fontWeight: 500, fontSize: 18, color: 'var(--accent)' }}>{v.price}€</p>
+              <p style={{ margin: 0, fontWeight: 500, fontSize: 18, color: 'var(--accent)' }}>{formatearPrecio(v.price, v.currency)}</p>
               <a href={v.link_busqueda} target="_blank" rel="noreferrer" style={{ fontSize: 12 }}>
                 Ver precios actuales →
               </a>
