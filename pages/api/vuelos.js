@@ -23,7 +23,6 @@ export default async function handler(req, res) {
     url.searchParams.set('limit', '30');
     url.searchParams.set('unique', 'false');
     url.searchParams.set('token', process.env.TRAVELPAYOUTS_TOKEN);
-    
 
     const response = await fetch(url.toString());
     const json = await response.json();
@@ -32,6 +31,7 @@ export default async function handler(req, res) {
     const vuelos = (json.data || []).map((v) => ({
       ...v,
       link_afiliado: `https://www.aviasales.com${v.link}?marker=${marker}`,
+      link_busqueda: `https://www.aviasales.com/search/${origin}${departDate.slice(8, 10)}${departDate.slice(5, 7)}${destination}1?marker=${marker}&currency=eur&locale=es`,
     }));
 
     cache[cacheKey] = { data: vuelos, time: Date.now() };
