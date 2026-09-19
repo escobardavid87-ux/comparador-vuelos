@@ -87,7 +87,7 @@ export default function CalendarioPrecios({ origin, destination, month: inicial,
       </div>
 
       <p style={{ fontSize: 12, color: '#777' }}>
-        {cargando ? 'Cargando precios…' : '  Precios orientativos desde. Pueden variar al reservar     .'}
+        {cargando ? 'Cargando precios…' : 'Precios orientativos, basados en búsquedas recientes. El precio final puede ser más alto.'}
       </p>
     </div>
   );
