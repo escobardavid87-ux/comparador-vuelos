@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import CalendarioPrecios from '../components/CalendarioPrecios';
-import AvisoAfiliados from '../components/AvisoAfiliados';import { formatearPrecio } from '../lib/formato';
+import AvisoAfiliados from '../components/AvisoAfiliados';
+import SelectorDivisa from '../components/SelectorDivisa';
+import { formatearPrecio } from '../lib/formato';
+import { useDivisa } from '../lib/useDivisa';
 
 const AEROLINEAS = {
   W4: 'Wizz Air',
@@ -42,15 +45,18 @@ const AEROLINEAS = {
 export default function Resultados() {
   const router = useRouter();
   const { origin, destination, departDate } = router.query;
+  const [divisa, cambiarDivisa, listo] = useDivisa();
   const [vuelos, setVuelos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!origin || !destination || !departDate) return;
+    if (!listo || !origin || !destination || !departDate) return;
 
     setCargando(true);
-    fetch(`/api/vuelos?origin=${origin}&destination=${destination}&departDate=${departDate}`)
+    setError(null);
+    const extra = divisa ? `&currency=${divisa}` : '';
+    fetch(`/api/vuelos?origin=${origin}&destination=${destination}&departDate=${departDate}${extra}`)
       .then((r) => r.json())
       .then((data) => {
         if (data.error) throw new Error(data.error);
@@ -58,7 +64,7 @@ export default function Resultados() {
       })
       .catch((err) => setError(err.message))
       .finally(() => setCargando(false));
-  }, [origin, destination, departDate]);
+  }, [listo, origin, destination, departDate, divisa]);
 
   return (
     <div className="container">
@@ -67,17 +73,22 @@ export default function Resultados() {
       </h1>
       <p style={{ color: 'var(--text-secondary)', fontSize: 13, marginTop: -8 }}>{departDate}</p>
 
+      <div style={{ margin: '8px 0' }}>
+        <SelectorDivisa divisa={divisa} onChange={cambiarDivisa} />
+      </div>
+
       {cargando && <p>Buscando los mejores precios…</p>}
       {error && <p style={{ color: '#a32d2d' }}>No se pudo cargar: {error}</p>}
       {!cargando && !error && vuelos.length === 0 && <p>No se encontraron vuelos para esta ruta y fecha.</p>}
 
-      {origin && destination && departDate && (
+      {listo && origin && destination && departDate && (
         <CalendarioPrecios
           key={`${origin}-${destination}`}
           origin={origin}
           destination={destination}
           month={departDate.slice(0, 7)}
           selected={departDate}
+          divisa={divisa}
           onSelect={(f) => router.push({ pathname: '/resultados', query: { origin, destination, departDate: f } }, undefined, { shallow: true })}
         />
       )}
