@@ -17,7 +17,10 @@ export default function Document() {
 })();`,
           }}
         />
-      </Head>
+      <Head>
+        <meta name="google-site-verification" content="VY_haqKfme0oqaBSbODa7RSgMaseJyKN_kQpDCGa6Y4" />
+        <script
+          data-cfasync="false"
       <body>
         <Main />
         <NextScript />
