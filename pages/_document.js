@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="es">
       <Head>
+        <meta name="google-site-verification" content="VY_haqKfmeOoqaBSbODa7RSgMaseJyKN_kQpDCGa6Y4" />
         <script
           data-cfasync="false"
           data-no-defer="1"
@@ -17,10 +18,7 @@ export default function Document() {
 })();`,
           }}
         />
-      <Head>
-        <meta name="google-site-verification" content="VY_haqKfme0oqaBSbODa7RSgMaseJyKN_kQpDCGa6Y4" />
-        <script
-          data-cfasync="false"
+      </Head>
       <body>
         <Main />
         <NextScript />
