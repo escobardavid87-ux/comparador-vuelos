@@ -1,6 +1,15 @@
 export default function AvisoAfiliados() {
   return (
-    <div style={{ fontSize: 12, color: '#777', marginTop: 24, textAlign: 'center' }}>
+    <div
+      style={{
+        fontSize: 12,
+        color: 'var(--text-secondary)',
+        marginTop: 28,
+        paddingTop: 20,
+        borderTop: '1px solid var(--border)',
+        textAlign: 'center',
+      }}
+    >
       <p style={{ margin: 0 }}>
         Somos un comparador de vuelos. Si reservas a través de nuestros enlaces, podemos recibir una comisión sin coste adicional para ti.
       </p>
