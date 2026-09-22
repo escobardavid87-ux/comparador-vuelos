@@ -67,52 +67,61 @@ export default function Resultados() {
   }, [listo, origin, destination, departDate, divisa]);
 
   return (
-    <div className="container">
-      <h1 style={{ fontSize: 18, fontWeight: 500 }}>
-        {origin} → {destination}
-      </h1>
-      <p style={{ color: 'var(--text-secondary)', fontSize: 13, marginTop: -8 }}>{departDate}</p>
-
-      <div style={{ margin: '8px 0' }}>
-        <SelectorDivisa divisa={divisa} onChange={cambiarDivisa} />
+    <div>
+      <div
+        style={{
+          background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%)',
+          padding: '1.75rem 1rem 2.25rem',
+        }}
+      >
+        <h1 style={{ fontSize: 22, fontWeight: 700, color: 'white', margin: 0 }}>
+          {origin} → {destination}
+        </h1>
+        <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 13, margin: '4px 0 0' }}>{departDate}</p>
       </div>
 
-      {cargando && <p>Buscando los mejores precios…</p>}
-      {error && <p style={{ color: '#a32d2d' }}>No se pudo cargar: {error}</p>}
-      {!cargando && !error && vuelos.length === 0 && <p>No se encontraron vuelos para esta ruta y fecha.</p>}
+      <div className="container" style={{ marginTop: '-1.25rem' }}>
+        <div className="card" style={{ marginBottom: 12 }}>
+          <SelectorDivisa divisa={divisa} onChange={cambiarDivisa} />
+        </div>
 
-      {listo && origin && destination && departDate && (
-        <CalendarioPrecios
-          key={`${origin}-${destination}`}
-          origin={origin}
-          destination={destination}
-          month={departDate.slice(0, 7)}
-          selected={departDate}
-          divisa={divisa}
-          onSelect={(f) => router.push({ pathname: '/resultados', query: { origin, destination, departDate: f } }, undefined, { shallow: true })}
-        />
-      )}
+        {cargando && <p>Buscando los mejores precios…</p>}
+        {error && <p style={{ color: '#a32d2d' }}>No se pudo cargar: {error}</p>}
+        {!cargando && !error && vuelos.length === 0 && <p>No se encontraron vuelos para esta ruta y fecha.</p>}
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 12 }}>
-        {vuelos.map((v, i) => (
-          <div key={i} className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <p style={{ margin: 0, fontWeight: 500, fontSize: 14 }}>{AEROLINEAS[v.airline] || v.airline || 'Aerolínea'}</p>
-              <p style={{ margin: '4px 0 0', fontSize: 12, color: 'var(--text-secondary)' }}>
-                {v.transfers === 0 ? 'Directo' : `${v.transfers} escala(s)`}
-              </p>
+        {listo && origin && destination && departDate && (
+          <CalendarioPrecios
+            key={`${origin}-${destination}`}
+            origin={origin}
+            destination={destination}
+            month={departDate.slice(0, 7)}
+            selected={departDate}
+            divisa={divisa}
+            onSelect={(f) => router.push({ pathname: '/resultados', query: { origin, destination, departDate: f } }, undefined, { shallow: true })}
+          />
+        )}
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 12 }}>
+          {vuelos.map((v, i) => (
+            <div key={i} className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <p style={{ margin: 0, fontWeight: 500, fontSize: 14 }}>{AEROLINEAS[v.airline] || v.airline || 'Aerolínea'}</p>
+                <p style={{ margin: '4px 0 0', fontSize: 12, color: 'var(--text-secondary)' }}>
+                  {v.transfers === 0 ? 'Directo' : `${v.transfers} escala(s)`}
+                </p>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <p style={{ margin: 0, fontWeight: 500, fontSize: 18, color: 'var(--accent)' }}>{formatearPrecio(v.price, v.currency)}</p>
+                <a href={v.link_busqueda} target="_blank" rel="noreferrer" style={{ fontSize: 12 }}>
+                  Ver precios actuales →
+                </a>
+              </div>
             </div>
-            <div style={{ textAlign: 'right' }}>
-              <p style={{ margin: 0, fontWeight: 500, fontSize: 18, color: 'var(--accent)' }}>{formatearPrecio(v.price, v.currency)}</p>
-              <a href={v.link_busqueda} target="_blank" rel="noreferrer" style={{ fontSize: 12 }}>
-                Ver precios actuales →
-              </a>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
+
+        <AvisoAfiliados />
       </div>
-
-      <AvisoAfiliados />
     </div>
   );
 }
