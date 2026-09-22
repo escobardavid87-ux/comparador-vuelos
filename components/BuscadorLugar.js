@@ -31,8 +31,8 @@ export default function BuscadorLugar({ etiqueta, onSelect }) {
   };
 
   return (
-    <div style={{ position: 'relative', marginBottom: 12 }}>
-      <label style={{ fontSize: 12, color: '#777' }}>{etiqueta}</label>
+    <div style={{ position: 'relative' }}>
+      <label style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{etiqueta}</label>
       <input
         value={texto}
         onChange={(e) => {
@@ -40,22 +40,49 @@ export default function BuscadorLugar({ etiqueta, onSelect }) {
           onSelect('');
         }}
         placeholder="Ciudad o aeropuerto"
-        style={{ display: 'block', width: '100%', padding: 10, fontSize: 16, border: '1px solid #ddd', borderRadius: 8, boxSizing: 'border-box' }}
       />
       {opciones.length > 0 && (
-        <div style={{ position: 'absolute', left: 0, right: 0, background: '#fff', border: '1px solid #ddd', borderRadius: 8, zIndex: 10, maxHeight: 260, overflowY: 'auto' }}>
+        <div
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            background: 'var(--surface)',
+            border: '1px solid var(--border)',
+            borderRadius: 10,
+            marginTop: 4,
+            boxShadow: 'var(--shadow-hover)',
+            zIndex: 20,
+            overflow: 'hidden',
+            maxHeight: 260,
+            overflowY: 'auto',
+          }}
+        >
           {opciones.map((o, i) => (
             <button
               key={i}
               onClick={() => elegir(o)}
-              style={{ display: 'block', width: '100%', textAlign: 'left', padding: 10, border: 'none', background: 'transparent', fontSize: 14, fontFamily: 'inherit', cursor: 'pointer' }}
+              style={{
+                display: 'block',
+                width: '100%',
+                textAlign: 'left',
+                padding: '10px 13px',
+                border: 'none',
+                borderBottom: i < opciones.length - 1 ? '1px solid var(--border)' : 'none',
+                background: 'transparent',
+                cursor: 'pointer',
+                fontFamily: 'inherit',
+              }}
             >
-              <strong>{o.name}</strong> ({o.code}) · {o.type === 'airport' ? 'Aeropuerto' : 'Ciudad'}
-              <div style={{ fontSize: 12, color: '#777' }}>{o.country}</div>
+              <strong style={{ fontSize: 14 }}>{o.name}</strong>{' '}
+              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>({o.code})</span>
+              <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+                {o.type === 'airport' ? 'Aeropuerto' : 'Ciudad'} · {o.country}
+              </div>
             </button>
           ))}
         </div>
       )}
     </div>
   );
-          }
+}
