@@ -5,6 +5,7 @@ export default function Document() {
     <Html lang="es">
       <Head>
         <meta name="google-site-verification" content="VY_haqKfme0oqaBSbODa7RSgMaseJyKN_kQpDCGa6Y4" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -28,4 +29,4 @@ export default function Document() {
       </body>
     </Html>
   );
-}
+            }
