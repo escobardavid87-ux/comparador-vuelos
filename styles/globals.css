@@ -14,6 +14,21 @@
   --radius: 14px;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent: #22a37f;
+    --accent-dark: #1a8266;
+    --accent-light: #12332a;
+    --text-primary: #f0efe9;
+    --text-secondary: #a3a196;
+    --border: #33322c;
+    --surface: #201f1a;
+    --bg: #15140f;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.35);
+    --shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+}
+
 body {
   margin: 0;
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -90,12 +105,23 @@ input, select {
   font-size: 14.5px;
   width: 100%;
   font-family: inherit;
+  background: var(--surface);
+  color: var(--text-primary);
   transition: border-color 0.15s ease;
 }
 
 input:focus, select:focus {
   outline: none;
   border-color: var(--accent);
+}
+
+@keyframes subirYAparecer {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.aparecer {
+  animation: subirYAparecer 0.35s ease both;
 }
 
 @media (min-width: 768px) {
