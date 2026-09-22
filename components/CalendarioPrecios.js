@@ -49,17 +49,28 @@ export default function CalendarioPrecios({ origin, destination, month: inicial,
   for (let i = 0; i < primerDia; i++) celdas.push(null);
   for (let d = 1; d <= diasMes; d++) celdas.push(d);
 
+  const botonMes = {
+    border: '1px solid var(--border)',
+    background: 'var(--surface)',
+    borderRadius: 8,
+    width: 32,
+    height: 32,
+    fontSize: 16,
+    cursor: 'pointer',
+    color: 'var(--text-primary)',
+  };
+
   return (
-    <div style={{ maxWidth: 420, margin: '16px auto', fontFamily: 'sans-serif' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-        <button onClick={() => cambiarMes(-1)}>‹</button>
-        <strong>{titulo}</strong>
-        <button onClick={() => cambiarMes(1)}>›</button>
+    <div className="card" style={{ maxWidth: 420, margin: '16px auto' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+        <button onClick={() => cambiarMes(-1)} style={botonMes}>‹</button>
+        <strong style={{ fontSize: 16 }}>{titulo}</strong>
+        <button onClick={() => cambiarMes(1)} style={botonMes}>›</button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 4, textAlign: 'center' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 5, textAlign: 'center' }}>
         {['L', 'M', 'X', 'J', 'V', 'S', 'D'].map((d) => (
-          <div key={d} style={{ fontSize: 12, color: '#777' }}>{d}</div>
+          <div key={d} style={{ fontSize: 12, color: 'var(--text-secondary)', fontWeight: 600 }}>{d}</div>
         ))}
         {celdas.map((dia, i) => {
           if (!dia) return <div key={i} />;
@@ -73,18 +84,19 @@ export default function CalendarioPrecios({ origin, destination, month: inicial,
               key={i}
               onClick={() => hayPrecio && onSelect && onSelect(fecha)}
               style={{
-                padding: '6px 0',
-                borderRadius: 6,
-                border: elegido ? '2px solid #2563eb' : '1px solid #ddd',
-                background: barato ? '#d4f5dd' : '#fff',
+                padding: '7px 0',
+                borderRadius: 8,
+                border: elegido ? '2px solid var(--accent)' : '1px solid var(--border)',
+                background: barato ? 'var(--accent-light)' : 'var(--surface)',
                 fontSize: 12,
                 fontFamily: 'inherit',
                 color: 'inherit',
                 cursor: hayPrecio ? 'pointer' : 'default',
+                transition: 'border-color 0.15s ease',
               }}
             >
               <div>{dia}</div>
-              <div style={{ fontWeight: 'bold', color: barato ? '#0a7a2f' : '#333' }}>
+              <div style={{ fontWeight: 700, color: barato ? 'var(--accent-dark)' : 'var(--text-primary)' }}>
                 {hayPrecio ? formatearPrecio(precio, moneda, true) : '-'}
               </div>
             </button>
@@ -92,7 +104,7 @@ export default function CalendarioPrecios({ origin, destination, month: inicial,
         })}
       </div>
 
-      <p style={{ fontSize: 12, color: '#777' }}>
+      <p style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 12, marginBottom: 0 }}>
         {cargando ? 'Cargando precios…' : 'Precios orientativos, basados en búsquedas recientes. El precio final puede ser más alto.'}
       </p>
     </div>
