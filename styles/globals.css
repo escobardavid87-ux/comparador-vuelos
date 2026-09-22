@@ -37,7 +37,14 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 {
+h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+h2, h3 {
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.25;
@@ -122,6 +129,39 @@ input:focus, select:focus {
 
 .aparecer {
   animation: subirYAparecer 0.35s ease both;
+}
+
+.franja {
+  position: relative;
+  overflow: hidden;
+  background-image: radial-gradient(rgba(255,255,255,0.16) 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+}
+
+@keyframes volar {
+  0% { left: -10%; opacity: 0; }
+  12% { opacity: 0.9; }
+  85% { opacity: 0.9; }
+  100% { left: 105%; opacity: 0; }
+}
+
+.avion-volando {
+  position: absolute;
+  top: 22px;
+  left: -10%;
+  opacity: 0;
+  animation: volar 2.6s ease-in-out 0.4s 1 forwards;
+  pointer-events: none;
+}
+
+.marca-agua-avion {
+  position: absolute;
+  right: -40px;
+  bottom: -30px;
+  opacity: 0.05;
+  transform: rotate(-18deg);
+  pointer-events: none;
+  z-index: 0;
 }
 
 @media (min-width: 768px) {
