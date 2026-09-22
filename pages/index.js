@@ -24,6 +24,25 @@ export default function Home() {
           textAlign: 'center',
         }}
       >
+        <div
+          style={{
+            width: 52,
+            height: 52,
+            borderRadius: 14,
+            background: 'rgba(255,255,255,0.15)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 14px',
+          }}
+        >
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M12.5 3.5c.3 0 .55.2.63.48l1.2 4.24 4.6 2.66c.3.17.47.52.4.86-.07.35-.36.6-.72.6h-4l-1.3 4.55c-.1.34-.4.57-.75.57h-.32c-.35 0-.65-.23-.75-.57l-1.3-4.55h-4c-.36 0-.65-.25-.72-.6-.07-.34.1-.69.4-.86l4.6-2.66 1.2-4.24c.08-.28.33-.48.63-.48h.2z"
+              fill="white"
+            />
+          </svg>
+        </div>
         <h1
           style={{
             fontSize: 28,
