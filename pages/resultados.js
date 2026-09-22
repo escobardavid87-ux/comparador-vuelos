@@ -77,7 +77,7 @@ export default function Resultados() {
   return (
     <div>
       <div
-        style={{
+          className="franja" style={{
           background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%)',
           padding: '1.75rem 1rem 2.25rem',
         }}
