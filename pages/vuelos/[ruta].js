@@ -1,4 +1,4 @@
-import Head from 'next/head';
+      import Head from 'next/head';
 import Link from 'next/link';
 import AvisoAfiliados from '../../components/AvisoAfiliados';
 import { RUTAS } from '../../lib/rutas';
@@ -43,7 +43,10 @@ export default function PaginaRuta({ ruta, fecha, desde }) {
     ? `Compara vuelos de ${ruta.from} a ${ruta.to}. Precios desde ${desde} € y calendario para encontrar el día más barato.`
     : `Compara vuelos de ${ruta.from} a ${ruta.to} y encuentra el día más barato con nuestro calendario de precios.`;
   const enlace = `/resultados?origin=${ruta.origin}&destination=${ruta.destination}&departDate=${fecha}`;
-  const otras = RUTAS.filter((r) => r.slug !== ruta.slug);
+
+  const mismoOrigen = RUTAS.filter((r) => r.slug !== ruta.slug && r.origin === ruta.origin);
+  const resto = RUTAS.filter((r) => r.slug !== ruta.slug && r.origin !== ruta.origin);
+  const relacionadas = [...mismoOrigen, ...resto].slice(0, 8);
 
   const faqs = [
     {
@@ -113,9 +116,9 @@ export default function PaginaRuta({ ruta, fecha, desde }) {
         </div>
       ))}
 
-      <h2 style={{ fontSize: 16, fontWeight: 500, marginTop: 24 }}>Otras rutas populares</h2>
+      <h2 style={{ fontSize: 16, fontWeight: 500, marginTop: 24 }}>Otras rutas relacionadas</h2>
       <ul>
-        {otras.map((r) => (
+        {relacionadas.map((r) => (
           <li key={r.slug}>
             <Link href={`/vuelos/${r.slug}`}>
               Vuelos de {r.from} a {r.to}
