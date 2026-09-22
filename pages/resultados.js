@@ -93,9 +93,25 @@ export default function Resultados() {
           <SelectorDivisa divisa={divisa} onChange={cambiarDivisa} />
         </div>
 
-        {cargando && <p>Buscando los mejores precios…</p>}
-        {error && <p style={{ color: '#a32d2d' }}>No se pudo cargar: {error}</p>}
-        {!cargando && !error && vuelos.length === 0 && <p>No se encontraron vuelos para esta ruta y fecha.</p>}
+        {cargando && (
+          <div className="card aparecer" style={{ textAlign: 'center' }}>
+            <p style={{ margin: 0 }}>Buscando los mejores precios…</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="card aparecer" style={{ borderColor: '#e0b4b4' }}>
+            <p style={{ margin: 0, color: '#a32d2d', fontWeight: 600 }}>No se pudo cargar</p>
+            <p style={{ margin: '4px 0 0', fontSize: 13 }}>{error}</p>
+          </div>
+        )}
+
+        {!cargando && !error && vuelos.length === 0 && (
+          <div className="card aparecer" style={{ textAlign: 'center' }}>
+            <p style={{ margin: 0, fontWeight: 600 }}>No se encontraron vuelos</p>
+            <p style={{ margin: '4px 0 0', fontSize: 13 }}>Prueba con otra fecha o revisa el calendario de precios.</p>
+          </div>
+        )}
 
         {listo && origin && destination && departDate && (
           <CalendarioPrecios
@@ -114,7 +130,11 @@ export default function Resultados() {
             const nombre = AEROLINEAS[v.airline] || v.airline || 'Aerolínea';
             const iniciales = (v.airline || nombre).slice(0, 2).toUpperCase();
             return (
-              <div key={i} className="card" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div
+                key={i}
+                className="card aparecer"
+                style={{ display: 'flex', alignItems: 'center', gap: 12, animationDelay: `${Math.min(i, 8) * 40}ms` }}
+              >
                 <div
                   style={{
                     width: 42,
@@ -143,7 +163,7 @@ export default function Resultados() {
                       fontWeight: 600,
                       padding: '2px 8px',
                       borderRadius: 999,
-                      background: v.transfers === 0 ? 'var(--accent-light)' : '#f1efe6',
+                      background: v.transfers === 0 ? 'var(--accent-light)' : 'var(--border)',
                       color: v.transfers === 0 ? 'var(--accent-dark)' : 'var(--text-secondary)',
                     }}
                   >
@@ -155,8 +175,24 @@ export default function Resultados() {
                   <p style={{ margin: 0, fontWeight: 700, fontSize: 20, color: 'var(--accent)' }}>
                     {formatearPrecio(v.price, v.currency)}
                   </p>
-                  <a href={v.link_busqueda} target="_blank" rel="noreferrer" style={{ fontSize: 12, fontWeight: 600 }}>
-                    Ver precios →
+                  <a
+                    href={v.link_busqueda}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 4,
+                      marginTop: 4,
+                      fontSize: 12,
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                    }}
+                  >
+                    Ver precios
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
                   </a>
                 </div>
               </div>
