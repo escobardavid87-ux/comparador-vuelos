@@ -45,12 +45,41 @@ export default function PaginaRuta({ ruta, fecha, desde }) {
   const enlace = `/resultados?origin=${ruta.origin}&destination=${ruta.destination}&departDate=${fecha}`;
   const otras = RUTAS.filter((r) => r.slug !== ruta.slug);
 
+  const faqs = [
+    {
+      q: `¿Cuál es la mejor época para volar de ${ruta.from} a ${ruta.to}?`,
+      a: `Los precios cambian según la temporada y la demanda del momento. En general, evitar los puentes, festivos y el verano en la ruta ${ruta.from}-${ruta.to} suele ayudar a encontrar billetes más baratos. Nuestro calendario de precios muestra el coste real de cada día para que compares antes de reservar.`,
+    },
+    {
+      q: `¿Con cuánta antelación conviene reservar el vuelo ${ruta.from}-${ruta.to}?`,
+      a: `Como norma general, reservar con entre 4 y 8 semanas de antelación suele dar buenos precios en la mayoría de rutas. Cuanto más cerca de la fecha de salida, más suben los precios, sobre todo en temporada alta.`,
+    },
+    {
+      q: `¿Hay vuelos directos entre ${ruta.from} y ${ruta.to}?`,
+      a: `Depende de la fecha y la aerolínea. En los resultados de búsqueda indicamos si cada vuelo es directo o tiene escalas, para que puedas elegir según tu prioridad: precio o duración del viaje.`,
+    },
+  ];
+
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  };
+
   return (
     <div className="container">
       <Head>
         <title>{`${titulo} | Comparador de vuelos`}</title>
         <meta name="description" content={descripcion} />
         <link rel="canonical" href={`https://comparador-vuelos.vercel.app/vuelos/${ruta.slug}`} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
       </Head>
 
       <h1 style={{ fontSize: 22, fontWeight: 500 }}>{titulo}</h1>
@@ -65,6 +94,24 @@ export default function PaginaRuta({ ruta, fecha, desde }) {
       <p>
         <Link href={enlace}>Ver precios y calendario de {ruta.from} a {ruta.to} →</Link>
       </p>
+
+      <h2 style={{ fontSize: 16, fontWeight: 500, marginTop: 24 }}>
+        Consejos para tu vuelo de {ruta.from} a {ruta.to}
+      </h2>
+      <ul>
+        <li>Compara varios días con el calendario de precios antes de elegir fecha, ya que el precio puede variar mucho de un día a otro.</li>
+        <li>Revisa si el billete incluye equipaje de mano y facturado, ya que algunas aerolíneas de bajo coste los cobran aparte.</li>
+        <li>Los vuelos con escala suelen ser más baratos que los directos, pero alargan el viaje; valora qué te compensa más.</li>
+        <li>Si tus fechas son flexibles, prueba a mover la salida uno o dos días para comparar precios.</li>
+      </ul>
+
+      <h2 style={{ fontSize: 16, fontWeight: 500, marginTop: 24 }}>Preguntas frecuentes</h2>
+      {faqs.map((f, i) => (
+        <div key={i} style={{ marginBottom: 12 }}>
+          <p style={{ fontWeight: 500, margin: '0 0 4px' }}>{f.q}</p>
+          <p style={{ margin: 0, color: 'var(--text-secondary)' }}>{f.a}</p>
+        </div>
+      ))}
 
       <h2 style={{ fontSize: 16, fontWeight: 500, marginTop: 24 }}>Otras rutas populares</h2>
       <ul>
