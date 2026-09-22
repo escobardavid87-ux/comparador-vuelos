@@ -18,12 +18,24 @@ export default function Home() {
   return (
     <div>
       <div
+        className="franja"
         style={{
           background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%)',
           padding: '2.75rem 1rem 3.5rem',
           textAlign: 'center',
         }}
       >
+        <svg
+          className="avion-volando"
+          width="30"
+          height="30"
+          viewBox="0 0 24 24"
+          fill="white"
+          style={{ transform: 'rotate(8deg)' }}
+        >
+          <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2.5 1.5V22l4-1 4 1v-1.5L13 19v-5.5l8 2.5z" />
+        </svg>
+
         <div
           style={{
             width: 52,
@@ -42,11 +54,9 @@ export default function Home() {
         </div>
         <h1
           style={{
-            fontSize: 28,
-            fontWeight: 700,
+            fontSize: 30,
             color: 'white',
             margin: 0,
-            letterSpacing: '-0.02em',
           }}
         >
           Encuentra el vuelo más barato
