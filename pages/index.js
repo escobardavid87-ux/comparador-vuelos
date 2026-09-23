@@ -1,7 +1,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import BuscadorLugar from '../components/BuscadorLugar';
 import AvisoAfiliados from '../components/AvisoAfiliados';
+
+const DESTACADOS = [
+  { slug: 'barcelona-roma', from: 'Barcelona', to: 'Roma' },
+  { slug: 'madrid-paris', from: 'Madrid', to: 'París' },
+  { slug: 'barcelona-londres', from: 'Barcelona', to: 'Londres' },
+  { slug: 'madrid-nueva-york', from: 'Madrid', to: 'Nueva York' },
+];
 
 export default function Home() {
   const router = useRouter();
@@ -89,6 +97,22 @@ export default function Home() {
             Buscar vuelos
           </button>
         </form>
+
+        <h2 style={{ fontSize: 16, fontWeight: 700, marginTop: 32, marginBottom: 12 }}>
+          Destinos populares
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+          {DESTACADOS.map((d) => (
+            <Link key={d.slug} href={`/vuelos/${d.slug}`} className="destino-card">
+              <div className="destino-franja" />
+              <div style={{ padding: '10px 12px' }}>
+                <p style={{ margin: 0, fontWeight: 600, fontSize: 13, color: 'var(--text-primary)' }}>
+                  {d.from} → {d.to}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
 
         <AvisoAfiliados />
       </div>
