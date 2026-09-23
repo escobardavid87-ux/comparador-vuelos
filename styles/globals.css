@@ -105,6 +105,26 @@ a:hover {
   transform: scale(0.98);
 }
 
+.btn-secundario {
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  transition: border-color 0.15s ease;
+}
+
+.btn-secundario:hover {
+  border-color: var(--accent);
+}
+
 input, select {
   border: 1.5px solid var(--border);
   border-radius: 10px;
@@ -129,6 +149,15 @@ input:focus, select:focus {
 
 .aparecer {
   animation: subirYAparecer 0.35s ease both;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-transition {
+  animation: pageIn 0.28s ease both;
 }
 
 .franja {
@@ -162,6 +191,39 @@ input:focus, select:focus {
   transform: rotate(-18deg);
   pointer-events: none;
   z-index: 0;
+}
+
+.destino-card {
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.destino-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.destino-franja {
+  height: 56px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+}
+
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--border) 25%, var(--accent-light) 50%, var(--border) 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 8px;
 }
 
 @media (min-width: 768px) {
