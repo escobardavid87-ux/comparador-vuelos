@@ -110,4 +110,49 @@ export default function PaginaRuta({ ruta, fecha, desde }) {
         <div style={{ position: 'relative', zIndex: 1 }}>
           <div className="card">
             {desde && (
-              <p sty
+              <p style={{ fontWeight: 600, margin: 0, color: 'var(--accent)', fontSize: 17 }}>
+                Desde {desde} € (solo ida, según búsquedas recientes)
+              </p>
+            )}
+            <Link href={enlace}>
+              <button className="btn-primary" style={{ marginTop: desde ? 12 : 0 }}>
+                Ver precios y calendario de {ruta.from} a {ruta.to}
+              </button>
+            </Link>
+          </div>
+
+          <h2 style={{ fontSize: 16, fontWeight: 700, marginTop: 28 }}>
+            Consejos para tu vuelo de {ruta.from} a {ruta.to}
+          </h2>
+          <ul>
+            <li>Compara varios días con el calendario de precios antes de elegir fecha, ya que el precio puede variar mucho de un día a otro.</li>
+            <li>Revisa si el billete incluye equipaje de mano y facturado, ya que algunas aerolíneas de bajo coste los cobran aparte.</li>
+            <li>Los vuelos con escala suelen ser más baratos que los directos, pero alargan el viaje; valora qué te compensa más.</li>
+            <li>Si tus fechas son flexibles, prueba a mover la salida uno o dos días para comparar precios.</li>
+          </ul>
+
+          <h2 style={{ fontSize: 16, fontWeight: 700, marginTop: 24 }}>Preguntas frecuentes</h2>
+          {faqs.map((f, i) => (
+            <div key={i} className="card" style={{ marginBottom: 10 }}>
+              <p style={{ fontWeight: 600, margin: '0 0 4px' }}>{f.q}</p>
+              <p style={{ margin: 0 }}>{f.a}</p>
+            </div>
+          ))}
+
+          <h2 style={{ fontSize: 16, fontWeight: 700, marginTop: 24 }}>Otras rutas relacionadas</h2>
+          <ul>
+            {relacionadas.map((r) => (
+              <li key={r.slug}>
+                <Link href={`/vuelos/${r.slug}`}>
+                  Vuelos de {r.from} a {r.to}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <AvisoAfiliados />
+        </div>
+      </div>
+    </div>
+  );
+}
