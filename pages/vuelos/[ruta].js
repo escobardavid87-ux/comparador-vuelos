@@ -86,62 +86,28 @@ export default function PaginaRuta({ ruta, fecha, desde }) {
       </Head>
 
       <div
+        className="franja"
         style={{
           background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%)',
           padding: '2rem 1rem 2.5rem',
         }}
       >
-        <h1 style={{ fontSize: 24, fontWeight: 700, color: 'white', margin: 0, letterSpacing: '-0.01em' }}>
-          {titulo}
-        </h1>
+        <h1 style={{ fontSize: 26, color: 'white', margin: 0 }}>{titulo}</h1>
         <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: 14, margin: '8px 0 0' }}>{descripcion}</p>
       </div>
 
-      <div className="container" style={{ marginTop: '-1.25rem' }}>
-        <div className="card">
-          {desde && (
-            <p style={{ fontWeight: 600, margin: 0, color: 'var(--accent)', fontSize: 17 }}>
-              Desde {desde} € (solo ida, según búsquedas recientes)
-            </p>
-          )}
-          <Link href={enlace}>
-            <button className="btn-primary" style={{ marginTop: desde ? 12 : 0 }}>
-              Ver precios y calendario de {ruta.from} a {ruta.to}
-            </button>
-          </Link>
-        </div>
+      <div className="container" style={{ marginTop: '-1.25rem', position: 'relative' }}>
+        <svg
+          className="marca-agua-avion"
+          width="220"
+          height="220"
+          viewBox="0 0 24 24"
+          fill="var(--accent)"
+        >
+          <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2.5 1.5V22l4-1 4 1v-1.5L13 19v-5.5l8 2.5z" />
+        </svg>
 
-        <h2 style={{ fontSize: 16, fontWeight: 700, marginTop: 28 }}>
-          Consejos para tu vuelo de {ruta.from} a {ruta.to}
-        </h2>
-        <ul>
-          <li>Compara varios días con el calendario de precios antes de elegir fecha, ya que el precio puede variar mucho de un día a otro.</li>
-          <li>Revisa si el billete incluye equipaje de mano y facturado, ya que algunas aerolíneas de bajo coste los cobran aparte.</li>
-          <li>Los vuelos con escala suelen ser más baratos que los directos, pero alargan el viaje; valora qué te compensa más.</li>
-          <li>Si tus fechas son flexibles, prueba a mover la salida uno o dos días para comparar precios.</li>
-        </ul>
-
-        <h2 style={{ fontSize: 16, fontWeight: 700, marginTop: 24 }}>Preguntas frecuentes</h2>
-        {faqs.map((f, i) => (
-          <div key={i} className="card" style={{ marginBottom: 10 }}>
-            <p style={{ fontWeight: 600, margin: '0 0 4px' }}>{f.q}</p>
-            <p style={{ margin: 0 }}>{f.a}</p>
-          </div>
-        ))}
-
-        <h2 style={{ fontSize: 16, fontWeight: 700, marginTop: 24 }}>Otras rutas relacionadas</h2>
-        <ul>
-          {relacionadas.map((r) => (
-            <li key={r.slug}>
-              <Link href={`/vuelos/${r.slug}`}>
-                Vuelos de {r.from} a {r.to}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <AvisoAfiliados />
-      </div>
-    </div>
-  );
-}
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div className="card">
+            {desde && (
+              <p sty
